@@ -7,6 +7,7 @@ LIVEPS4 te permite ver y jugar tu PS4 desde tu Android, y transmitir ese juego e
 ## 1. Requisitos
 
 - Android 10 o superior (para el audio del juego).
+- **El archivo `libchiaki-jni.so`** (el motor de Remote Play). Sin él, la app abre pero no puede conectarse a la PS4. Ver la sección **Motor libchiaki-jni.so**.
 - PS4 con exploit **GoldHEN** (necesario para Apollo Save Tool).
 - **Apollo Save Tool** instalado en la PS4.
 - PS4 y teléfono en **la misma red Wi-Fi**.
@@ -15,6 +16,29 @@ LIVEPS4 te permite ver y jugar tu PS4 desde tu Android, y transmitir ese juego e
 - Cuenta de TikTok o YouTube lista para transmitir.
 
 ---
+
+## Motor libchiaki-jni.so (OBLIGATORIO)
+
+LIVEPS4 necesita el archivo `libchiaki-jni.so` para conectarse a la PS4. Es el motor de Remote Play y no viene dentro de la app.
+
+### Primera vez
+
+1. Descarga `libchiaki-jni.so` y guárdalo en **Descargas**. No lo cambies de nombre.
+2. Abre LIVEPS4. Si no encuentra el motor, muestra el aviso **"Selecciona libchiaki-jni.so en Descargas"** y abre el selector de archivos.
+3. Elige `libchiaki-jni.so` desde **Descargas**.
+4. La app lo copia a su carpeta privada y lo carga. Debe aparecer **Motor PS4LIVE ACTIVO** en la pantalla principal.
+
+### Cuándo vuelve a pedirlo
+
+- Después de **desinstalar** la app o **borrar sus datos**, porque la copia del motor se borra con ellos.
+- Después de **actualizar** la app solo si el motor cambió. Si no, sigue funcionando.
+
+### Si no funciona
+
+- **"Motor PS4LIVE con error"** o **"Chiaki FAIL"**: el archivo elegido no es el motor correcto, o está incompleto. Vuelve a descargarlo y elígelo de nuevo.
+- **"Sin motor: la app abre solo como interfaz"**: cancelaste el selector. Toca de nuevo para volver a elegirlo.
+
+El motor usa la licencia AGPL-3.0 (ver la pantalla de Ajustes). No lo subas a repositorios públicos sin revisar esa licencia.
 
 ## 2. Preparar la PS4 (una sola vez)
 
@@ -50,6 +74,31 @@ Si Apollo lo muestra como **número decimal** en vez de hexadecimal, usa la vers
 2. Anota la **Dirección IP** (ejemplo: `192.168.1.50`).
 
 ---
+
+## Clave de transmisión de YouTube (IMPORTANTE)
+
+LIVEPS4 transmite a YouTube con una **Stream Key** (clave de transmisión). Es privada: quien la tenga puede transmitir en tu canal.
+
+### Cómo obtenerla
+
+1. Abre **YouTube Studio** (`studio.youtube.com`) en el navegador de tu teléfono y entra con la cuenta del canal.
+2. Toca **Crear (+)** → **Transmitir en vivo**.
+3. Si YouTube pide verificar el canal o activar los directos, complétalo. La activación puede tardar hasta 24 horas la primera vez.
+4. En **Configuración de la transmisión**, busca **Clave: Default stream key** y toca el botón de copiar junto a la clave.
+
+### Cómo usarla en LIVEPS4
+
+1. Abre **Cuentas y claves de streaming** → **YouTube**.
+2. Pega la clave en **Stream key**.
+3. Deja vacío **Servidor RTMP**. La app usa `rtmp://a.rtmp.youtube.com/live2`.
+4. Toca **ACTUALIZAR**. Debe aparecer **Conexión y publish aceptados ✔**.
+
+### Reglas de seguridad
+
+- **No compartas la clave.** No la pongas en capturas, en el README, en GitHub ni en chats.
+- Si la compartiste por accidente, **regénérala** en YouTube Studio con el botón de refrescar junto a la clave, y pégala de nuevo en LIVEPS4 con **ACTUALIZAR**.
+- Cada vez que cambies la clave en YouTube, actualízala también en LIVEPS4. Si no, el directo no conectará.
+- Antes de subir el proyecto a GitHub, revisa que no haya claves en ningún archivo.
 
 ## 3. Configurar LIVEPS4 (una sola vez)
 
@@ -181,6 +230,7 @@ Toca el engranaje en la pantalla principal.
 
 | Mensaje o problema | Qué hacer |
 |---|---|
+| **Motor PS4LIVE con error / Chiaki FAIL** | Vuelve a elegir `libchiaki-jni.so` desde Descargas. Ver la sección del motor. |
 | **Sin permiso de captura** | Vuelve a iniciar y acepta el permiso de captura. |
 | **El sistema negó la captura de pantalla** | Cierra la app, ábrela y vuelve a intentar. |
 | **El audio del juego requiere Android 10 o superior** | Tu teléfono no soporta el audio del juego. Desactívalo en Ajustes. |
