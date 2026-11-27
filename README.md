@@ -13,6 +13,7 @@ LIVEPS4 te permite ver y jugar tu PS4 desde tu Android por Remote Play. Para tra
 - Tu **cuenta principal** de PS4, con tus partidas guardadas.
 - El archivo **`libchiaki-jni.so`** (el motor de Remote Play). Ver la sección 2.
 - La app de **TikTok** o **YouTube** instalada.
+- *(Opcional)* La app **PrismLive**, si quieres transmitir a varias plataformas a la vez. Ver la sección 6.
 
 ---
 
@@ -120,6 +121,22 @@ LIVEPS4 no transmite por sí mismo. Lo que transmites es lo que se ve en tu pant
 3. En YouTube: **+ → En vivo → Screencast**.
 4. Acepta el permiso de captura e inicia la transmisión en YouTube.
 5. Regresa a LIVEPS4 con el botón de recientes y juega.
+
+### PrismLive (multistream: varias plataformas a la vez)
+
+PrismLive es una app aparte que puede transmitir a **YouTube y otras plataformas al mismo tiempo**. LIVEPS4 no la controla: solo muestra el juego, y PrismLive hace la captura y la transmisión.
+
+1. Abre PrismLive e inicia sesión con tu cuenta de Google. Así vinculas YouTube sin copiar claves.
+2. En la pestaña **LIVE**, elige **Pantalla** y toca **Ready**.
+3. Toca **Go Live** y acepta el permiso de captura con **Comenzar ahora**.
+4. Durante la cuenta regresiva, cambia a LIVEPS4, conecta la PS4 y deja el juego en pantalla.
+5. Gira el teléfono a horizontal. El directo sigue en PrismLive, que muestra el estado y el audio.
+
+**Audio en PrismLive:** tiene su propio **Mezclador de audio**, con un deslizador para el audio de la aplicación (el juego) y otro para el micrófono. Ajusta ahí el volumen de cada fuente.
+
+**Plataformas:** PrismLive transmite a varias plataformas a la vez, pero **TikTok no está disponible** en PrismLive para cuentas normales. Para TikTok sigue usando la captura de pantalla de TikTok, como se describe arriba.
+
+**Costos:** PrismLive tiene una suscripción después de la prueba gratuita. Revisa el precio y las condiciones dentro de la app antes de activarla.
 
 **Importante:** lo que se ve en pantalla es lo que se transmite. Si cambias de app o abres la pantalla de inicio, tu audiencia también lo verá.
 
