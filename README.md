@@ -1,253 +1,225 @@
 # LIVEPS4 · Guía de uso
 
-LIVEPS4 te permite ver y jugar tu PS4 desde tu Android, y transmitir ese juego en vivo a TikTok o YouTube.
+LIVEPS4 te permite ver y jugar tu PS4 desde tu Android por Remote Play. Para transmitir, usas la captura de pantalla de **TikTok** o **YouTube**, y LIVEPS4 muestra el juego en pantalla.
 
 ---
 
 ## 1. Requisitos
 
-- Android 10 o superior (para el audio del juego).
-- **El archivo `libchiaki-jni.so`** (el motor de Remote Play). Sin él, la app abre pero no puede conectarse a la PS4. Ver la sección **Motor libchiaki-jni.so**.
-- PS4 con exploit **GoldHEN** (necesario para Apollo Save Tool).
-- **Apollo Save Tool** instalado en la PS4.
+- Android 10 o superior.
+- PS4 con exploit **GoldHEN** y **Apollo Save Tool** instalado.
 - PS4 y teléfono en **la misma red Wi-Fi**.
 - Un **perfil secundario** en la PS4, que usarás solo para Remote Play.
 - Tu **cuenta principal** de PS4, con tus partidas guardadas.
-- Cuenta de TikTok o YouTube lista para transmitir.
+- El archivo **`libchiaki-jni.so`** (el motor de Remote Play). Ver la sección 2.
+- La app de **TikTok** o **YouTube** instalada.
 
 ---
 
-## Motor libchiaki-jni.so (OBLIGATORIO)
+## 2. Motor libchiaki-jni.so (obligatorio)
 
-LIVEPS4 necesita el archivo `libchiaki-jni.so` para conectarse a la PS4. Es el motor de Remote Play y no viene dentro de la app.
+LIVEPS4 necesita el archivo `libchiaki-jni.so` para conectarse a la PS4. No viene dentro de la app.
 
-### Primera vez
+**Primera vez:**
 
-1. Descarga `libchiaki-jni.so` y guárdalo en **Descargas**. No lo cambies de nombre.
-2. Abre LIVEPS4. Si no encuentra el motor, muestra el aviso **"Selecciona libchiaki-jni.so en Descargas"** y abre el selector de archivos.
-3. Elige `libchiaki-jni.so` desde **Descargas**.
-4. La app lo copia a su carpeta privada y lo carga. Debe aparecer **Motor PS4LIVE ACTIVO** en la pantalla principal.
+1. Guarda `libchiaki-jni.so` en **Descargas**. No lo cambies de nombre.
+2. Abre LIVEPS4. Si no encuentra el motor, muestra **"Selecciona libchiaki-jni.so en Descargas"** y abre el selector.
+3. Elige el archivo desde **Descargas**.
+4. Debe aparecer **Motor PS4LIVE ACTIVO** en la pantalla principal.
 
-### Cuándo vuelve a pedirlo
+**Cuándo vuelve a pedirlo:** después de desinstalar la app o borrar sus datos.
 
-- Después de **desinstalar** la app o **borrar sus datos**, porque la copia del motor se borra con ellos.
-- Después de **actualizar** la app solo si el motor cambió. Si no, sigue funcionando.
+**Si no funciona:** "Motor PS4LIVE con error" o "Chiaki FAIL" significa que el archivo no es el correcto o está incompleto. Vuelve a elegirlo.
 
-### Si no funciona
+---
 
-- **"Motor PS4LIVE con error"** o **"Chiaki FAIL"**: el archivo elegido no es el motor correcto, o está incompleto. Vuelve a descargarlo y elígelo de nuevo.
-- **"Sin motor: la app abre solo como interfaz"**: cancelaste el selector. Toca de nuevo para volver a elegirlo.
+## 3. Preparar la PS4 (una sola vez)
 
-El motor usa la licencia AGPL-3.0 (ver la pantalla de Ajustes). No lo subas a repositorios públicos sin revisar esa licencia.
-
-## 2. Preparar la PS4 (una sola vez)
-
-### 2.1 Activar el perfil secundario sin conexión a PSN
+### 3.1 Activar el perfil secundario sin conexión a PSN
 
 1. Abre **Apollo Save Tool** en la PS4.
 2. Ve a **User Tools → Activate PS4 Accounts**.
 3. Selecciona tu perfil secundario y presiona **R2** para generar un ID aleatorio. Confirma.
 4. Reinicia la PS4 y vuelve a cargar **GoldHEN**.
-5. Al iniciar sesión, si el nombre del perfil aparece en cursiva, la activación funcionó.
+5. Si al iniciar sesión el nombre del perfil aparece en cursiva, la activación funcionó.
 
-### 2.2 Obtener el Account ID
+### 3.2 Obtener el Account ID
 
-1. Vuelve a entrar a **Apollo Save Tool → User Tools → Activate PS4 Accounts**.
+1. Entra a **Apollo Save Tool → User Tools → Activate PS4 Accounts**.
 2. Anota el **Account ID** de 16 caracteres que aparece en **Console details**. Es **hexadecimal** (ejemplo: `0000000000000001`).
 
-**No confundas los campos:** el **User ID** (8 caracteres, ejemplo `1d4b651b`) y el **Console PSID** (32 caracteres) **no** son el Account ID. Solo usa el campo **Account ID**.
+**No confundas los campos:** el **User ID** (8 caracteres) y el **Console PSID** (32 caracteres) **no** son el Account ID.
 
-**Sobre los valores de todos unos (`1111111111111111`):** si tu perfil muestra solo unos, ese valor no identifica al perfil de forma confiable. Usa el Account ID del perfil que activaste con R2 en el paso 2.1.
+**Sobre los valores de todos unos (`1111111111111111`):** no identifican al perfil de forma confiable. Usa el Account ID del perfil que activaste con R2.
 
-Si Apollo lo muestra como **número decimal** en vez de hexadecimal, usa la versión decimal del script de la sección 3.
+### 3.3 Activar Remote Play y generar el PIN
 
-### 2.3 Activar Remote Play y generar el PIN
+1. En la PS4: **Ajustes → Ajustes de conexión de Remote Play → Agregar dispositivo**.
+2. La PS4 genera un **PIN de 8 dígitos**. Es temporal: pídelo justo antes de emparejar.
 
-1. En la PS4: **Configuración → Configuración de conexión del Uso a distancia**.
-2. Marca **Activar Uso a distancia**.
-3. Selecciona **Agregar dispositivo**. Aparece un **PIN de 8 dígitos**.
-4. Deja esa pantalla abierta. El PIN dura unos minutos.
+### 3.4 Consultar la IP de la PS4
 
-### 2.4 Consultar la IP de la PS4
-
-1. Con el perfil secundario, ve a **Configuración → Red → Ver estado de la conexión**.
-2. Anota la **Dirección IP** (ejemplo: `192.168.1.50`).
+Con el perfil secundario: **Ajustes → Red → Ver estado de la conexión**. Anota la **Dirección IP** (ejemplo: `192.168.1.50`).
 
 ---
 
-## Clave de transmisión de YouTube (IMPORTANTE)
-
-LIVEPS4 transmite a YouTube con una **Stream Key** (clave de transmisión). Es privada: quien la tenga puede transmitir en tu canal.
-
-### Cómo obtenerla
-
-1. Abre **YouTube Studio** (`studio.youtube.com`) en el navegador de tu teléfono y entra con la cuenta del canal.
-2. Toca **Crear (+)** → **Transmitir en vivo**.
-3. Si YouTube pide verificar el canal o activar los directos, complétalo. La activación puede tardar hasta 24 horas la primera vez.
-4. En **Configuración de la transmisión**, busca **Clave: Default stream key** y toca el botón de copiar junto a la clave.
-
-### Cómo usarla en LIVEPS4
-
-1. Abre **Cuentas y claves de streaming** → **YouTube**.
-2. Pega la clave en **Stream key**.
-3. Deja vacío **Servidor RTMP**. La app usa `rtmp://a.rtmp.youtube.com/live2`.
-4. Toca **ACTUALIZAR**. Debe aparecer **Conexión y publish aceptados ✔**.
-
-### Reglas de seguridad
-
-- **No compartas la clave.** No la pongas en capturas, en el README, en GitHub ni en chats.
-- Si la compartiste por accidente, **regénérala** en YouTube Studio con el botón de refrescar junto a la clave, y pégala de nuevo en LIVEPS4 con **ACTUALIZAR**.
-- Cada vez que cambies la clave en YouTube, actualízala también en LIVEPS4. Si no, el directo no conectará.
-- Antes de subir el proyecto a GitHub, revisa que no haya claves en ningún archivo.
-
-## 3. Configurar LIVEPS4 (una sola vez)
-
-Completa estos datos y guárdalos:
+## 4. Configurar LIVEPS4 (una sola vez)
 
 | Campo | Qué poner |
 |---|---|
-| **IP de la PS4** | La Dirección IP del paso 2.4. |
-| **PIN de registro (8 dígitos)** | El PIN del paso 2.3. |
-| **PSN Account ID (Base64)** | El ID del paso 2.2 convertido a Base64 de 8 bytes (ver abajo). |
+| **IP de la PS4** | La Dirección IP del paso 3.4. |
+| **PIN de registro (8 dígitos)** | El PIN del paso 3.3. |
+| **PSN Account ID (Base64)** | El Account ID convertido a Base64 de 8 bytes (ver abajo). |
 | **PSN Online ID (opcional)** | Tu nombre de usuario de PSN. |
 
 ### Convertir el Account ID a Base64
 
-LIVEPS4 decodifica el valor en Base64 y solo lo acepta si da **exactamente 8 bytes**. Si no, lo ignora y el log muestra `account_id=MISSING`.
+LIVEPS4 solo acepta el valor si al decodificarlo da **exactamente 8 bytes**. Si no, lo ignora y el registro muestra `account_id=MISSING`.
 
-**Si Apollo muestra 16 caracteres hexadecimales (el caso normal):**
+Como el Account ID es hexadecimal, en una terminal con Python:
 
 ```python
 import base64
-h = "0000000000000001"   # tu Account ID de 16 caracteres hex de Apollo
+h = "0000000000000001"   # tu Account ID de 16 caracteres de Apollo
 print(base64.b64encode(bytes.fromhex(h)).decode())
 ```
 
-Ejemplos verificados: `0000000000000001` → `AAAAAAAAAAE=` y `1111111111111111` → `ERERERERERE=`.
-
-**Solo si Apollo muestra un número decimal de 16 dígitos (no es tu caso):**
-
-```python
-import base64, struct
-n = 1234567890123456     # tu número de 16 dígitos
-print("LE", base64.b64encode(struct.pack("<Q", n)).decode())
-print("BE", base64.b64encode(struct.pack(">Q", n)).decode())
-```
-
-Si ya te funciona el valor que tienes en la app, **no lo cambies**. Estos scripts son solo para cuando sale `account_id=MISSING` o el emparejamiento falla. No uses convertidores en línea ni chatbots para esto.
+Si ya te funciona el valor que tienes, **no lo cambies**. Usa el script solo si sale `MISSING` o el emparejamiento falla.
 
 ---
 
-## 4. Flujo completo para transmitir a TikTok
+## 5. Emparejar y conectar
 
-Sigue este orden. El primer paso es obligatorio.
+1. Con el perfil secundario iniciado en la PS4, llena la IP, el PIN, el Account ID y el Online ID en LIVEPS4.
+2. Toca **Emparejar**.
+3. Espera a ver **Emparejado ✔ llaves guardadas**. No vuelves a hacerlo, salvo que desvincules la consola.
+4. Toca **INICIAR REMOTE PLAY** para ver la PS4 en tu teléfono.
 
-**Paso 1. Inicia la PS4 con el perfil secundario.**
-Ese perfil es el que usa Remote Play. Si entras con tu cuenta principal primero, no funciona como debe.
-
-**Paso 2. Deja LIVEPS4 lista.**
-Abre la app y verifica que la IP, el PIN, el Account ID y el Online ID estén guardados.
-
-**Paso 3. Abre TikTok e inicia el directo.**
-- Sin cerrar LIVEPS4 (puede quedar en segundo plano), abre la app de **TikTok**.
-- Toca **+** en la parte inferior y desliza hasta **LIVE**.
-- En las opciones superiores de LIVE, elige **Juegos móviles** (Mobile Gaming).
-- Elige la orientación **Horizontal**.
-- Escribe el título, elige la categoría del juego y ajusta la calidad de video según tu internet.
-- Toca **Emitir LIVE**. TikTok pedirá permiso de captura de pantalla; acéptalo con **Comenzar ahora**.
-
-**Paso 4. Regresa a LIVEPS4 durante la cuenta regresiva.**
-Aparece una cuenta regresiva (unos 25 segundos). En ese tiempo:
-- Toca **Emparejar**.
-- Toca **INICIAR REMOTE PLAY**.
-
-**Paso 5. Gira el teléfono a horizontal.**
-La transmisión de TikTok arranca sola y lo que se ve en pantalla se transmite.
-
-**Paso 6. Enciende el control.**
-Al activarse Remote Play, el control se desconecta. Enciéndelo de nuevo.
-
-**Paso 7. Inicia sesión con tu cuenta principal.**
-Así accedes a tus partidas guardadas y puedes jugar.
-
-**Importante:** LIVEPS4 debe quedar **en primer plano** durante todo el directo. Lo que se ve en pantalla es lo que se transmite. Si cambias de app, tu audiencia también lo verá.
+Si aparece **PS4 no respondió**, **Conexión rechazada** o **Tiempo agotado**, revisa que la PS4 esté encendida, la IP, la red Wi-Fi y que el PIN no haya expirado.
 
 ---
 
-## 5. Transmitir a YouTube (alternativa)
+## 6. Transmitir con TikTok o YouTube
+
+LIVEPS4 no transmite por sí mismo. Lo que transmites es lo que se ve en tu pantalla, y la app de TikTok o YouTube hace la captura.
+
+### TikTok
+
+1. Conecta la PS4 en LIVEPS4 antes de empezar, para tener la imagen lista.
+2. En TikTok toca **+** en la parte inferior y desliza hasta **LIVE**.
+3. Elige **Juegos móviles** (Mobile Gaming) y la orientación **Horizontal**.
+4. Escribe el título, elige la categoría y la calidad.
+5. Toca **Emitir LIVE** y acepta el permiso de captura con **Comenzar ahora**.
+6. Durante la cuenta regresiva, regresa a LIVEPS4 y toca **INICIAR REMOTE PLAY** si aún no lo hiciste.
+7. Gira el teléfono a horizontal y deja LIVEPS4 en primer plano durante todo el directo.
+
+### YouTube
 
 1. Conecta la PS4 en LIVEPS4 para que el juego se vea.
 2. Toca **DIRECTO → MODO YOUTUBE APP**. La app te explica los pasos.
-3. Toca **ABRIR YOUTUBE**. En YouTube: **+ → En vivo → Screencast**.
-4. Inicia la transmisión en YouTube.
+3. En YouTube: **+ → En vivo → Screencast**.
+4. Acepta el permiso de captura e inicia la transmisión en YouTube.
 5. Regresa a LIVEPS4 con el botón de recientes y juega.
 
-También puedes transmitir directo desde LIVEPS4 con una **Stream Key** de YouTube o Twitch: pégala en el panel de DIRECTO y toca **INICIAR EN VIVO (RTMP)**.
+**Importante:** lo que se ve en pantalla es lo que se transmite. Si cambias de app o abres la pantalla de inicio, tu audiencia también lo verá.
+
+**Audio:** el sonido de la consola se mantiene en tu teléfono mientras la transmisión graba tu voz. El audio lo maneja TikTok o YouTube, no LIVEPS4.
 
 ---
 
-## 6. Modo limpio (ocultar lo que no quieres que se vea)
+## 7. Modo limpio (ocultar lo que no quieres que se vea)
 
 - Toca **LIMPIO** en la barra superior.
 - Se ocultan los controles de la app y las barras del sistema (hora, batería, señal y barra de navegación).
-- Para volver a mostrar los controles, toca el botón **⚙️** (abajo a la derecha). Tocar otras partes de la pantalla **no** los muestra.
+- Para volver a mostrar los controles, toca el botón **⚙️** (abajo a la derecha). Tocar otras partes de la pantalla **no** los muestra, para evitar que aparezcan por error en el directo.
 
-Durante un directo, las barras se ocultan automáticamente. Mientras el directo está activo, **No molestar** silencia las notificaciones y al terminar restaura tu configuración anterior.
-
-**Permiso de No molestar:** la primera vez que inicies un directo, la app te lleva a los ajustes para activar LIVEPS4 en "No molestar". Actívalo, regresa a la app y vuelve a iniciar.
+La zona de la cámara frontal también se dibuja, así no queda una franja negra en la captura.
 
 ---
 
-## 7. Botones de la barra superior
+## 8. Botones de la barra superior
 
 | Botón | Qué hace |
 |---|---|
 | **CAM** | Muestra u oculta la cámara sobre el juego. |
 | **LIMPIO** | Oculta controles y barras del sistema. |
-| **DIRECTO** | Abre o cierra el panel de transmisión. |
+| **DIRECTO** | Abre el panel con **MODO YOUTUBE APP**. |
 | **SALIR** | Cierra la sesión con la PS4 y regresa a la pantalla principal. |
 
 ---
 
-## 8. Ajustes
+## 9. Ajustes
 
 Toca el engranaje en la pantalla principal.
 
-- **Resolución**: 720p (si no, 480p) u otra.
-- **Bitrate del juego** y **Bitrate del directo**: calidad de video. Más alto = mejor imagen, pero necesita mejor red.
-- **FPS**: cuadros por segundo.
-- **Audio del juego en el directo (Android 10+)**: si está **activado**, el directo lleva el sonido del juego. Si está **desactivado**, usa el micrófono (no recomendado para juegos).
-- **Mantener pantalla encendida**: evita que el teléfono se apague durante la sesión.
-- **Reconectar automáticamente al caer**: intenta volver a conectar si se corta la sesión.
-- **Vibración (rumble) en el teléfono**: vibra cuando el juego lo pide.
-- **Intercambiar ✕/○ y □/△ (mandos 8BitDo)**: para mandos 8BitDo.
-- **Exportar ajustes (JSON)**: guarda tus ajustes en Descargas.
-- **Restablecer ajustes**: vuelve a los valores de fábrica. Tus consolas y claves **no** se borran.
+**Video del Remote Play**
+
+- **Resolución:** 360p, 540p, 720p o 1080p. Por defecto 720p.
+- **FPS:** 30 o 60. Afecta lo que ves en tu teléfono.
+- **Bitrate del juego:** calidad del video de Remote Play. Más alto = mejor imagen, pero necesita mejor red.
+- **Codec H.265:** solo para PS5.
+
+**Sesión y estabilidad**
+
+- **Reconectar automáticamente al caer.**
+- **Mantener pantalla encendida.**
+- **Log detallado (diagnóstico).** Actívalo solo si necesitas revisar un problema.
+- **Vibración (rumble) en el teléfono.**
+
+**Controles táctiles**
+
+- **Intercambiar ✕/○ y □/△ (mandos 8BitDo).**
+
+**Datos y diagnóstico**
+
+- **Exportar ajustes (JSON):** guarda tus ajustes en Descargas.
+- **Generar reporte de diagnóstico:** crea un archivo `.txt` en Descargas con datos del teléfono, configuración y errores recientes. No incluye claves.
+- **Restablecer ajustes:** vuelve a los valores de fábrica. Tus consolas no se borran.
+- **Créditos y licencia:** ver la sección 12.
+
+**Nota:** la sección **DIRECTO** de Ajustes (bitrate del directo, 720p y 1080p del directo, y 60 fps del directo) ya no se usa con el flujo de TikTok y YouTube. No afecta la transmisión.
 
 ---
 
-## 9. Si algo falla
+## 10. Batería y cierres
+
+- Un consumo alto es normal mientras transmites: LIVEPS4 decodifica el video de la PS4 y tu teléfono transmite por la app de TikTok o YouTube. Con 1080p a 60 fps el consumo es mayor.
+- **No pongas LIVEPS4 en reposo** mientras transmites. Lo que sí conviene es que el sistema no la limite:
+  1. Ve a **Ajustes → Aplicaciones → LIVEPS4 → Batería**.
+  2. Elige **Sin restricciones**.
+  3. Si tu teléfono tiene un administrador de batería o cuidado del dispositivo, agrega LIVEPS4 a las apps que no se cierran.
+- Si LIVEPS4 se cierra sola, revisa si el reporte de diagnóstico tiene una línea `CRASH`. Ese es el error exacto.
+
+---
+
+## 11. Si algo falla
 
 | Mensaje o problema | Qué hacer |
 |---|---|
-| **Motor PS4LIVE con error / Chiaki FAIL** | Vuelve a elegir `libchiaki-jni.so` desde Descargas. Ver la sección del motor. |
-| **Sin permiso de captura** | Vuelve a iniciar y acepta el permiso de captura. |
-| **El sistema negó la captura de pantalla** | Cierra la app, ábrela y vuelve a intentar. |
-| **El audio del juego requiere Android 10 o superior** | Tu teléfono no soporta el audio del juego. Desactívalo en Ajustes. |
-| **No se pudo capturar el audio del juego** | La app de Remote Play puede estar bloqueando la captura. Prueba con un video de YouTube para comprobar si el audio sale. |
+| **Motor PS4LIVE con error / Chiaki FAIL** | Vuelve a elegir `libchiaki-jni.so` desde Descargas. |
+| **Sin motor** | Elige el archivo desde Descargas. |
+| **`account_id=MISSING`** | Revisa el Account ID con el script de la sección 4. |
 | **PS4 no respondió / Conexión rechazada / Tiempo agotado** | Revisa que la PS4 esté encendida, la IP, la red Wi-Fi y que el PIN no haya expirado. Genera un PIN nuevo. |
-| **Sin llaves: Empareja primero** | Empareja la PS4 (paso 4 del flujo). |
-| **`account_id=MISSING` en el log** | Revisa el Account ID con los scripts de la sección 3. |
-| **El directo se congela** | Baja el bitrate del directo en Ajustes. |
-| **No aparece la hora ni la batería en el directo** | Es lo esperado: el modo limpio oculta las barras del sistema. |
+| **Sin permiso de captura** | Vuelve a iniciar en TikTok o YouTube y acepta el permiso. |
+| **El directo se congela** | Baja el bitrate del juego en Ajustes. |
+| **Barras negras arriba y abajo en el TV** | Es la proporción de tu pantalla (20:9) frente al 16:9 de la captura. Ver la sección 13. |
 
-**Diagnóstico:** si nada funciona, genera un reporte desde la app y compártelo con el desarrollador. Se guarda en Descargas como `ps4live_diagnostico_....txt`.
+**Diagnóstico:** si nada funciona, en **Ajustes → Datos y diagnóstico** toca **Generar reporte de diagnóstico** y mándalo al desarrollador.
 
 ---
 
-## 10. Limitaciones conocidas
+## 12. Licencia y créditos
 
-- Solo se transmite lo que se ve en pantalla.
-- Si deslizas desde el borde superior o inferior, las barras pueden aparecer en el directo. Evita hacerlo.
-- El audio del juego depende de que la app de Remote Play lo permita.
+- El motor `libchiaki-jni.so` está basado en **Chiaki** y se distribuye bajo la licencia **AGPL-3.0**.
+- La app se distribuye junto con el código fuente. Si la compartes o la publicas, revisa esa licencia.
+- Para ver los créditos dentro de la app: **Ajustes → Datos y diagnóstico → Créditos y licencia**.
+- No subas `libchiaki-jni.so` a repositorios públicos sin revisar la licencia.
+
+---
+
+## 13. Limitaciones conocidas
+
+- La captura la hace TikTok o YouTube. LIVEPS4 no controla la proporción ni el audio de esas apps.
+- Las barras negras arriba y abajo en el modo horizontal vienen de la proporción 20:9 de tu teléfono frente al 16:9 de la transmisión. Quitarlas requiere recortar la imagen en el lado de la transmisión.
+- Si deslizas desde el borde superior o inferior, las barras del sistema pueden aparecer en la captura. Evita hacerlo durante el directo.
 - El aviso de "compartiendo pantalla" lo pone Android y no se puede ocultar desde la app.
